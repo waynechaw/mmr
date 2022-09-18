@@ -43,6 +43,11 @@ app.get('/mmr/:name', function (req, res) {
 
       let opggdata = body;
       var testRE = opggdata.match(/"summoner_id":"(.*?)","acct_id/);
+
+      if (!testRE) {
+        return res.send('user does not exist');
+      }
+      
       let encryptedID = testRE[1];
 
       request(`https://na.op.gg/api/games/na/summoners/${encryptedID}?hl=en_US&game_type=NORMAL`, function (error, response, body) {
