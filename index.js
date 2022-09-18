@@ -42,18 +42,22 @@ app.get('/mmr/:name', function (req, res) {
     request(`https://na.op.gg/summoners/na/${req.params.name}`, function (error, response, body) {
 
       let opggdata = body;
-      var testRE = opggdata.match(/"summoner_id":"(.*?)","acct_id/);
+      var encryptedID = opggdata.match(/"summoner_id":"(.*?)","acct_id/);
 
-      if (!testRE) {
+      if (!encryptedID) {
         return res.send('user does not exist');
       }
-      
-      let encryptedID = testRE[1];
+
+      encryptedID = encryptedID[1];
 
       request(`https://na.op.gg/api/games/na/summoners/${encryptedID}?hl=en_US&game_type=NORMAL`, function (error, response, body) {
 
         let jsonData = JSON.parse(body);
         jsonData.data = jsonData.data.filter(match => match.average_tier_info);
+
+        if (jsonData.data.length == 0) {
+          return res.send('no matches for this user')
+        }
         let recentMatchesTiers = jsonData.data.map(match => match.average_tier_info.tier + match.average_tier_info.division);
         let recentMatchesAvgMMR = jsonData.data.map(match => rankToMMR[match.average_tier_info.tier + match.average_tier_info.division]).reduce((a, b) => a + b)/jsonData.data.length;
 
