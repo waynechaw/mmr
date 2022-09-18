@@ -1,7 +1,9 @@
 const express = require("express");
 const request = require("request");
 const app = express();
+var bodyParser = require('body-parser')
 const port = process.env.PORT || 3001;
+app.use(bodyParser.urlencoded({ extended: true }));
 
 let rankToMMR = {
   CHALLENGER: 9001,
@@ -35,7 +37,46 @@ let rankToMMR = {
 
 app.get('/mmr', function (req, res) {
 
-  res.send('name missing');
+
+  let mmrRows = '';
+
+  for (const property in rankToMMR) {
+    mmrRows = mmrRows + `
+      <tr>
+        <td>${property}</td>
+        <td>${rankToMMR[property]}</td>
+      </tr>
+    `;
+  }
+
+
+  res.send(`
+
+    <h1>Simple MMR Checker</h1>
+
+    <p>This tool checks user's MMR in normals. Currently only works for NA. <br> 
+    The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>    
+
+    <form method='post' action='/mmr/submit'>
+         <input placeholder="Enter Summoner's Name" name="summonerName" value=""/>
+         <button type='submit'>Submit</button>
+    </form>
+
+    <br><br>
+    <table>
+      <tr>
+        <th>Rank</th>
+        <th>MMR</th>
+      </tr>
+      ${mmrRows}
+    </table>
+
+
+  `);
+})
+
+app.post('/mmr/submit', function (req, res) {
+  return res.redirect(`/mmr/${req.body.summonerName}`); 
 })
 
 
@@ -80,7 +121,8 @@ app.get('/mmr/:name', function (req, res) {
 
           <h1>Simple MMR Checker</h1>
 
-          <p>This tool checks user's MMR in normals. Currently only works for NA. The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>
+          <p>This tool checks user's MMR in normals. Currently only works for NA. <br>
+          The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>
 
           <div><b>Name: </b> ${req.params.name}</div>
           <div><b>Recent Matches Avg MMR: </b> ${recentMatchesAvgMMR}</div>
@@ -117,4 +159,4 @@ app.get('/mmr/:name', function (req, res) {
 
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));z
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
