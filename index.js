@@ -1,6 +1,7 @@
-var express = require('express');
-var app = express();
-const request = require('request');
+const express = require("express");
+const request = require("request");
+const app = express();
+const port = process.env.PORT || 3001;
 
 let rankToMMR = {
   DIAMOND1:2480,
@@ -47,7 +48,6 @@ app.get('/mmr/:name', function (req, res) {
       request(`https://na.op.gg/api/games/na/summoners/${encryptedID}?hl=en_US&game_type=NORMAL`, function (error, response, body) {
 
         let jsonData = JSON.parse(body);
-
         jsonData.data = jsonData.data.filter(match => match.average_tier_info);
         let recentMatchesTiers = jsonData.data.map(match => match.average_tier_info.tier + match.average_tier_info.division);
         let recentMatchesAvgMMR = jsonData.data.map(match => rankToMMR[match.average_tier_info.tier + match.average_tier_info.division]).reduce((a, b) => a + b)/jsonData.data.length;
@@ -70,7 +70,6 @@ app.get('/mmr/:name', function (req, res) {
           <div><b>Number of Matches Analyzed: </b> ${jsonData.data.length}</div>
           <div><b>Recent Matches Tiers: </b> ${recentMatchesTiers}</div>
           <br><br>
-
           <p>the result uses below table to convert rank to mmr. this is mostly a guess, contact wayne to improve this table</p>
           <table>
             <tr>
@@ -102,8 +101,4 @@ app.get('/mmr/:name', function (req, res) {
 
 })
 
-var server = app.listen(8081, function () {
-   var host = server.address().address
-   var port = server.address().port
-   console.log("Example app listening at http://%s:%s", host, port)
-})
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
