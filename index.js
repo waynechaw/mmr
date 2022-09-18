@@ -4,31 +4,33 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 let rankToMMR = {
+  CHALLENGER: 9001,
+  GRANDMASTER1: 3100,
   MASTER1: 3000,
-  DIAMOND1:2480,
-  DIAMOND2:2410,
-  DIAMOND3:2270,
-  DIAMOND4:2200,
-  PLATINUM1:2130,
-  PLATINUM2:2060,
-  PLATINUM3:1990,
-  PLATINUM4 :1920,
-  GOLD1:1780,
-  GOLD2:1710,
-  GOLD3:1640,
-  GOLD4:1570,
-  SILVER1:1430,
-  SILVER2:1360,
-  SILVER3:1290,
-  SILVER4:1220,
-  BRONZE1:1080,
-  BRONZE2:1010,
-  BRONZE3:940,
-  BRONZE4:870,
+  DIAMOND1:2700,
+  DIAMOND2:2600,
+  DIAMOND3:2500,
+  DIAMOND4:2400,
+  PLATINUM1:2300,
+  PLATINUM2:2200,
+  PLATINUM3:2100,
+  PLATINUM4 :2000,
+  GOLD1:1900,
+  GOLD2:1800,
+  GOLD3:1700,
+  GOLD4:1600,
+  SILVER1:1500,
+  SILVER2:1400,
+  SILVER3:1300,
+  SILVER4:1200,
+  BRONZE1:1100,
+  BRONZE2:1000,
+  BRONZE3:900,
+  BRONZE4:880,
   IRON1:700,
-  IRON2:700,
-  IRON3:700,
-  IRON4:700
+  IRON2:600,
+  IRON3:500,
+  IRON4:400
 }
 
 app.get('/mmr', function (req, res) {
@@ -115,4 +117,4 @@ app.get('/mmr/:name', function (req, res) {
 
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));z
