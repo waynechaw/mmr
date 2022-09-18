@@ -1,8 +1,8 @@
-# Node Hello World
+# MMR Checker
 
-Simple node.js app that servers "hello world"
+Simple node.js app that checks your MMR
 
-Great for testing simple deployments to the cloud
+NA ONLY <3
 
 ## Run It
 
