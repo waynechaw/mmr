@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 let rankToMMR = {
+  MASTER1: 3000,
   DIAMOND1:2480,
   DIAMOND2:2410,
   DIAMOND3:2270,
