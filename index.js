@@ -75,12 +75,16 @@ app.get('/mmr/:name', function (req, res) {
         }
 
         res.send(`
+
+          <h1>Simple MMR Checker</h1>
+
+          <p>This tool checks user's MMR in normals. Currently only works for NA. The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>
+
           <div><b>Name: </b> ${req.params.name}</div>
           <div><b>Recent Matches Avg MMR: </b> ${recentMatchesAvgMMR}</div>
           <div><b>Number of Matches Analyzed: </b> ${jsonData.data.length}</div>
           <div><b>Recent Matches Tiers: </b> ${recentMatchesTiers}</div>
           <br><br>
-          <p>the result uses below table to convert rank to mmr. this is mostly a guess, contact wayne to improve this table</p>
           <table>
             <tr>
               <th>Rank</th>
