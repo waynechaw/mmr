@@ -55,6 +55,7 @@ app.get('/mmr', function (req, res) {
     <h1>Simple MMR Checker</h1>
 
     <p>This tool checks user's MMR in normals. Currently only works for NA. <br> 
+    To get the most accurate mmr, <b>play 20 games solo in normals</b>. Queueing with other players will cause inaccurate result.<br>
     The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>    
 
     <form method='post' action='/mmr/submit'>
@@ -121,8 +122,9 @@ app.get('/mmr/:name', function (req, res) {
 
           <h1>Simple MMR Checker</h1>
 
-          <p>This tool checks user's MMR in normals. Currently only works for NA. <br>
-          The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>
+          <p>This tool checks user's MMR in normals. Currently only works for NA. <br> 
+          To get the most accurate mmr, <b>play 20 games solo in normals</b>. Queueing with other players will cause inaccurate result.<br>
+          The tool uses below table to convert rank to mmr. This is mostly a guess, so contact wayne to help improve this table</p>      
 
           <div><b>Name: </b> ${req.params.name}</div>
           <div><b>Recent Matches Avg MMR: </b> ${recentMatchesAvgMMR}</div>
@@ -159,4 +161,4 @@ app.get('/mmr/:name', function (req, res) {
 
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`App listening on port ${port}!`));
