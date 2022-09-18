@@ -47,7 +47,7 @@ app.get('/mmr/:name', function (req, res) {
       request(`https://na.op.gg/api/games/na/summoners/${encryptedID}?hl=en_US&game_type=NORMAL`, function (error, response, body) {
 
         let jsonData = JSON.parse(body);
-        console.log(99999, JSON.stringify(jsonData.data));
+
         jsonData.data = jsonData.data.filter(match => match.average_tier_info);
         let recentMatchesTiers = jsonData.data.map(match => match.average_tier_info.tier + match.average_tier_info.division);
         let recentMatchesAvgMMR = jsonData.data.map(match => rankToMMR[match.average_tier_info.tier + match.average_tier_info.division]).reduce((a, b) => a + b)/jsonData.data.length;
@@ -65,15 +65,11 @@ app.get('/mmr/:name', function (req, res) {
         }
 
         res.send(`
-
           <div><b>Name: </b> ${req.params.name}</div>
           <div><b>Recent Matches Avg MMR: </b> ${recentMatchesAvgMMR}</div>
           <div><b>Number of Matches Analyzed: </b> ${jsonData.data.length}</div>
           <div><b>Recent Matches Tiers: </b> ${recentMatchesTiers}</div>
-
           <br><br>
-
-
 
           <p>the result uses below table to convert rank to mmr. this is mostly a guess, contact wayne to improve this table</p>
           <table>
@@ -83,9 +79,6 @@ app.get('/mmr/:name', function (req, res) {
             </tr>
             ${mmrRows}
           </table>
-
-
-
         `);
 
         // res.json({
